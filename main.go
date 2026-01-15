@@ -12,6 +12,7 @@ func main() {
 	http.HandleFunc("/", web.IndexHandler)
 	http.HandleFunc("/lookup", lookup.Handler)
 	http.HandleFunc("/lookup-view", web.LookupViewHandler)
+	http.HandleFunc("/batch", lookup.BatchHandler)
 
 	fmt.Println("Listening on :8080")
 	http.ListenAndServe(":8080", nil)
