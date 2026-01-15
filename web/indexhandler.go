@@ -15,8 +15,7 @@ type validationCheck struct {
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	defaultKey := template.HTMLEscapeString(lookup.DefaultAPIKey())
-	html := fmt.Sprintf(`
+	html := `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,6 +47,15 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
             color: var(--muted);
             font-size: 0.95rem;
         }
+        pre {
+            max-height: 250px;
+            overflow: auto;
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -65,7 +73,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
             margin-bottom: 6px;
         }
         input[type="text"], textarea {
-            width: 100%%;
+            width: 100%;
             padding: 10px 12px;
             border-radius: 8px;
             border: 1px solid var(--border);
@@ -145,7 +153,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
         .checks li:last-child { border-bottom: none; }
         .checks .icon { font-size: 1.2rem; }
         .result-grid {
-            width: 100%%;
+            width: 100%;
             border-collapse: collapse;
             margin-top: 12px;
             font-size: 0.93rem;
@@ -174,7 +182,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
             margin: 0;
         }
         .recent-item {
-            width: 100%%;
+            width: 100%;
             justify-content: flex-start;
             margin-bottom: 8px;
             background: rgba(5,97,201,0.1);
@@ -191,16 +199,6 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
             background: rgba(220,38,38,0.12);
             color: #991b1b;
         }
-        .api-key-row {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .api-key-row input {
-            flex: 1;
-            min-width: 200px;
-        }
         .actions {
             display: flex;
             gap: 10px;
@@ -211,15 +209,6 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 <body>
     <h1>MSISDN Lookup</h1>
     <p class="muted">HLR-lite style enrichment for Serbia, Italy, Switzerland, Greece and friends. Prefix-driven rules, instant explanations, exportable results.</p>
-
-    <div class="card">
-        <h2>API access</h2>
-        <p class="muted">Use the key when calling <code>/lookup</code> or <code>/batch</code>. Stored locally in your browser.</p>
-        <div class="api-key-row">
-            <input type="text" id="api-key-input" value="%s" placeholder="Enter API key">
-            <button type="button" id="save-api-key">Save key</button>
-        </div>
-    </div>
 
     <div class="layout">
         <div>
@@ -260,22 +249,13 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
     <script>
         (function() {
             const storageKey = 'lookupRecent';
-            const apiKeyStorageKey = 'lookupApiKey';
             const recentList = document.getElementById('recent-items');
             const msisdnInput = document.getElementById('msisdn');
-            const apiKeyInput = document.getElementById('api-key-input');
             const batchForm = document.getElementById('batch-form');
             const batchResult = document.getElementById('batch-result');
             const exportJsonBtn = document.getElementById('export-json');
             const exportCsvBtn = document.getElementById('export-csv');
             let lastBatchResults = [];
-
-            apiKeyInput.value = window.localStorage.getItem(apiKeyStorageKey) || apiKeyInput.value;
-
-            document.getElementById('save-api-key').addEventListener('click', () => {
-                window.localStorage.setItem(apiKeyStorageKey, apiKeyInput.value.trim());
-                alert('API key saved locally.');
-            });
 
             document.addEventListener('click', (evt) => {
                 const copyBtn = evt.target.closest('[data-copy]');
@@ -318,12 +298,10 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
                     alert('Please paste at least one MSISDN');
                     return;
                 }
-                const key = window.localStorage.getItem(apiKeyStorageKey) || apiKeyInput.value.trim();
                 const res = await fetch('/batch', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'text/plain',
-                        'X-API-Key': key || '%s'
+                        'Content-Type': 'text/plain'
                     },
                     body: payload
                 });
@@ -414,7 +392,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
     </script>
 </body>
 </html>
-`, defaultKey, defaultKey)
+
+`
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	fmt.Fprint(w, html)
 }
@@ -465,7 +444,7 @@ func LookupViewHandler(w http.ResponseWriter, r *http.Request) {
 
 	validAlert := ""
 	if !resp.Valid.KnownCountryCode {
-		validAlert = `<div class="alert error">Unknown country code. We can’t map this prefix.</div>`
+		validAlert = `<div class="alert error">Unknown country code. We can't map this prefix.</div>`
 	}
 
 	normalized := resp.Normalized
@@ -513,9 +492,13 @@ func LookupViewHandler(w http.ResponseWriter, r *http.Request) {
             <li>%s</li>
         </ul>
     </details>
-    <p class="muted">Raw JSON response:</p>
-    <button type="button" class="copy-btn" data-copy='%s' data-default-label="Copy JSON">Copy JSON</button>
-    <pre>%s</pre>
+    <div class="json-block">
+        <div class="json-header">
+            <p class="muted" style="margin:0;">Raw JSON response</p>
+            <button type="button" class="copy-btn" data-copy='%s' data-default-label="Copy JSON">Copy JSON</button>
+        </div>
+        <pre>%s</pre>
+    </div>
 </div>
 `, dataJSON,
 		template.HTMLEscapeString(resp.Input),

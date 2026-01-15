@@ -7,10 +7,6 @@ import (
 
 // Handler exposes the lookup HTTP endpoint.
 func Handler(w http.ResponseWriter, r *http.Request) {
-	if !enforceAccess(w, r) {
-		return
-	}
-
 	msisdn := r.URL.Query().Get("msisdn")
 	if msisdn == "" {
 		http.Error(w, "missing msisdn parameter", http.StatusBadRequest)

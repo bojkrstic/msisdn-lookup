@@ -17,10 +17,6 @@ type batchResponse struct {
 
 // BatchHandler performs multi lookup on newline separated input.
 func BatchHandler(w http.ResponseWriter, r *http.Request) {
-	if !enforceAccess(w, r) {
-		return
-	}
-
 	if r.Method != http.MethodPost {
 		http.Error(w, "batch endpoint expects POST", http.StatusMethodNotAllowed)
 		return
