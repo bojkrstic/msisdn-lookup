@@ -1,0 +1,180 @@
+{
+  "countries": [
+    {
+      "name": "USA/Canada",
+      "codes": ["1"],
+      "minLength": 11,
+      "maxLength": 11,
+      "typeRules": [
+        {
+          "prefix": "",
+          "type": "unknown",
+          "explanation": "North American plan not yet modeled"
+        }
+      ],
+      "operatorRules": []
+    },
+    {
+      "name": "France",
+      "codes": ["33"],
+      "minLength": 11,
+      "maxLength": 11,
+      "typeRules": [
+        {
+          "prefix": "",
+          "type": "unknown",
+          "explanation": "Placeholder until detailed mapping is added"
+        }
+      ],
+      "operatorRules": []
+    },
+    {
+      "name": "Italy",
+      "codes": ["39"],
+      "minLength": 11,
+      "maxLength": 12,
+      "typeRules": [
+        {
+          "prefix": "3",
+          "type": "mobile",
+          "explanation": "3xx blocks in Italy map to mobile operators"
+        },
+        {
+          "prefix": "",
+          "type": "fixed",
+          "explanation": "Other prefixes denote fixed or service numbers"
+        }
+      ],
+      "operatorRules": [
+        {"prefix": "39320", "operator": "Wind Tre Italy (320 prefix)", "explanation": "RANGE 320 assigned to Wind Tre"},
+        {"prefix": "39328", "operator": "Wind Tre Italy (328 prefix)", "explanation": "RANGE 328 assigned to Wind Tre"},
+        {"prefix": "39329", "operator": "Wind Tre Italy (329 prefix)", "explanation": "RANGE 329 assigned to Wind Tre"},
+        {"prefix": "39330", "operator": "TIM Italy (330 prefix)", "explanation": "330 -> TIM MSRN"},
+        {"prefix": "39333", "operator": "TIM Italy (333 prefix)", "explanation": "333 -> TIM allocation"},
+        {"prefix": "39335", "operator": "TIM Italy (335 prefix)", "explanation": "335 -> TIM allocation"},
+        {"prefix": "39338", "operator": "TIM Italy (338 prefix)", "explanation": "338 -> TIM allocation"},
+        {"prefix": "39339", "operator": "TIM Italy (339 prefix)", "explanation": "339 -> TIM allocation"},
+        {"prefix": "39340", "operator": "Vodafone Italy (340 prefix)", "explanation": "340 -> Vodafone"},
+        {"prefix": "39345", "operator": "Vodafone Italy (345 prefix)", "explanation": "345 -> Vodafone"},
+        {"prefix": "39348", "operator": "Vodafone Italy (348 prefix)", "explanation": "348 -> Vodafone"},
+        {"prefix": "39349", "operator": "Vodafone Italy (349 prefix)", "explanation": "349 -> Vodafone"},
+        {"prefix": "39351", "operator": "Iliad Italy (351 prefix)", "explanation": "351 -> Iliad"},
+        {"prefix": "39370", "operator": "PosteMobile / Fastweb (370 prefix)", "explanation": "370 -> PosteMobile/Fastweb"},
+        {"prefix": "393", "operator": "Italian mobile (3xx range)", "explanation": "Fallback for Italian mobile prefixes"},
+        {"prefix": "3902", "operator": "Italy fixed (Milan 02)", "explanation": "02 geographic area"},
+        {"prefix": "3906", "operator": "Italy fixed (Rome 06)", "explanation": "06 geographic area"},
+        {"prefix": "39081", "operator": "Italy fixed (Naples 081)", "explanation": "081 geographic area"},
+        {"prefix": "390", "operator": "Italy fixed (other geographic ranges)", "explanation": "Fallback for other Italian fixed prefixes"}
+      ]
+    },
+    {
+      "name": "Serbia",
+      "codes": ["381"],
+      "minLength": 11,
+      "maxLength": 12,
+      "typeRules": [
+        {
+          "prefix": "6",
+          "type": "mobile",
+          "explanation": "06x are mobile ranges"
+        },
+        {
+          "prefix": "",
+          "type": "fixed",
+          "explanation": "Other ranges map to fixed numbers"
+        }
+      ],
+      "operatorRules": [
+        {"prefix": "38160", "operator": "A1 Serbia (original range)", "explanation": "060 allocated to A1"},
+        {"prefix": "38161", "operator": "A1 Serbia (original range)", "explanation": "061 allocated to A1"},
+        {"prefix": "38162", "operator": "Yettel Serbia (original range)", "explanation": "062 allocated to Yettel"},
+        {"prefix": "38163", "operator": "Yettel Serbia (original range)", "explanation": "063 allocated to Yettel"},
+        {"prefix": "38164", "operator": "Telekom Srbija (mts original range)", "explanation": "064 allocated to Telekom Srbija"},
+        {"prefix": "38165", "operator": "Telekom Srbija (mts original range)", "explanation": "065 allocated to Telekom Srbija"},
+        {"prefix": "38166", "operator": "Telekom Srbija (mts original range)", "explanation": "066 allocated to Telekom Srbija"},
+        {"prefix": "38167", "operator": "Globaltel Serbia (MVNO range)", "explanation": "067 allocated to Globaltel"},
+        {"prefix": "38169", "operator": "A1 Serbia (additional range)", "explanation": "069 allocated to A1"},
+        {"prefix": "38111", "operator": "Serbia fixed (Belgrade)", "explanation": "011 geographic area"},
+        {"prefix": "38118", "operator": "Serbia fixed (Niš)", "explanation": "018 geographic area"},
+        {"prefix": "38121", "operator": "Serbia fixed (Novi Sad)", "explanation": "021 geographic area"}
+      ]
+    },
+    {
+      "name": "Croatia",
+      "codes": ["385"],
+      "minLength": 11,
+      "maxLength": 12,
+      "typeRules": [
+        {
+          "prefix": "",
+          "type": "unknown",
+          "explanation": "Croatian ranges not modeled yet"
+        }
+      ],
+      "operatorRules": []
+    },
+    {
+      "name": "Switzerland",
+      "codes": ["41"],
+      "minLength": 11,
+      "maxLength": 11,
+      "typeRules": [
+        {
+          "prefix": "7",
+          "type": "mobile",
+          "explanation": "07x are Swiss mobile ranges"
+        },
+        {
+          "prefix": "",
+          "type": "fixed",
+          "explanation": "02/04 ranges map to geographic fixed numbers"
+        }
+      ],
+      "operatorRules": [
+        {"prefix": "4174", "operator": "Lycamobile Switzerland (074 prefix)", "explanation": "074 -> Lycamobile"},
+        {"prefix": "4176", "operator": "Sunrise UPC Switzerland (076 prefix)", "explanation": "076 -> Sunrise"},
+        {"prefix": "4178", "operator": "Salt Switzerland (078 prefix)", "explanation": "078 -> Salt"},
+        {"prefix": "4179", "operator": "Swisscom Mobile (079 prefix)", "explanation": "079 -> Swisscom"},
+        {"prefix": "417", "operator": "Switzerland mobile (07x range)", "explanation": "07x fallback mobile"},
+        {"prefix": "4121", "operator": "Switzerland fixed (Lausanne/Vaud 21)", "explanation": "021 area"},
+        {"prefix": "4122", "operator": "Switzerland fixed (Geneva 22)", "explanation": "022 area"},
+        {"prefix": "4131", "operator": "Switzerland fixed (Bern 31)", "explanation": "031 area"},
+        {"prefix": "4141", "operator": "Switzerland fixed (Central Switzerland 41)", "explanation": "041 area"},
+        {"prefix": "4144", "operator": "Switzerland fixed (Zürich 44)", "explanation": "044 area"},
+        {"prefix": "4171", "operator": "Switzerland fixed (St. Gallen 71)", "explanation": "071 area"},
+        {"prefix": "412", "operator": "Switzerland fixed (02x/04x range)", "explanation": "02/04 fallback"}
+      ]
+    },
+    {
+      "name": "Greece",
+      "codes": ["30"],
+      "minLength": 12,
+      "maxLength": 12,
+      "typeRules": [
+        {
+          "prefix": "69",
+          "type": "mobile",
+          "explanation": "69x -> Greek mobile" 
+        },
+        {
+          "prefix": "",
+          "type": "fixed",
+          "explanation": "Other ranges map to Greek fixed numbers"
+        }
+      ],
+      "operatorRules": [
+        {"prefix": "30690", "operator": "WIND Hellas (690 prefix)", "explanation": "690 -> WIND"},
+        {"prefix": "30693", "operator": "WIND Hellas (693 prefix)", "explanation": "693 -> WIND"},
+        {"prefix": "30694", "operator": "Vodafone Greece (694 prefix)", "explanation": "694 -> Vodafone"},
+        {"prefix": "30695", "operator": "Vodafone Greece (695 prefix)", "explanation": "695 -> Vodafone"},
+        {"prefix": "30697", "operator": "Cosmote Greece (697 prefix)", "explanation": "697 -> Cosmote"},
+        {"prefix": "30698", "operator": "Cosmote Greece (698 prefix)", "explanation": "698 -> Cosmote"},
+        {"prefix": "3069", "operator": "Greek mobile (Cosmote/Vodafone/WIND)", "explanation": "General Greek mobile fallback"},
+        {"prefix": "30231", "operator": "Greek fixed (OTE - Thessaloniki)", "explanation": "231 -> Thessaloniki"},
+        {"prefix": "30221", "operator": "Greek fixed (OTE - Thessaly / Central)", "explanation": "221 -> Thessaly"},
+        {"prefix": "30210", "operator": "Greek fixed (OTE - Athens)", "explanation": "210 -> Athens"},
+        {"prefix": "302", "operator": "Greek fixed (other cities)", "explanation": "Other Greek fixed ranges"}
+      ]
+    }
+  ]
+}
