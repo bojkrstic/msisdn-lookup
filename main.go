@@ -14,8 +14,9 @@ func main() {
 	http.HandleFunc("/lookup-view", web.LookupViewHandler)
 	http.HandleFunc("/batch", lookup.BatchHandler)
 
-	fmt.Println("Listening on :8080")
-	http.ListenAndServe(":8080", nil)
+	const addr = ":9090"
+	fmt.Println("Listening on", addr)
+	http.ListenAndServe(addr, nil)
 
 	fmt.Println(lookup.Country("+393383260866")) // Italy
 	fmt.Println(lookup.Country("+38164123456"))  // Serbia
