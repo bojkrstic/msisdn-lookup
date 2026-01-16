@@ -214,7 +214,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
         <div>
             <div class="card">
                 <h2>Single lookup</h2>
-                <form id="single-form" hx-get="/lookup-view" hx-target="#result" hx-trigger="submit">
+                <form id="single-form" hx-get="lookup-view" hx-target="#result" hx-trigger="submit">
                     <label for="msisdn">MSISDN</label>
                     <input type="text" id="msisdn" name="msisdn" placeholder="+30 697 038 91 62" autocomplete="off">
                     <button type="submit">Lookup</button>
