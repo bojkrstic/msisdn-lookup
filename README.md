@@ -15,7 +15,10 @@ or this -> docker run --rm -p 9090:9090 --name msisdn msisdn-lookup
 
 
 Rebild on server:
-cd /opt/msisdn-lookup
-docker build -t msisdn-lookup:latest .
-sudo systemctl restart msisdn-lookup
 
+
+1. cd /opt/msisdn-lookup
+2. git pull
+3. docker build -t msisdn-lookup:latest .
+4. sudo systemctl restart msisdn-lookup
+5. http://83-229-82-132.cloud-xip.com/msisdn/
