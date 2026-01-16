@@ -12,3 +12,10 @@ or this -> docker run --rm -p 9090:9090 --name msisdn msisdn-lookup
 3. Visit http://localhost:8080 (or set the port as desired, e.g. -p 9090:8080).
 
 4. For a quick reload after code changes, run the build and docker run again. If you want "watch" behavior, you can use docker buildx bake --load or similar scripts, but the simplest is to rebuild after major changes.
+
+
+Rebild on server:
+cd /opt/msisdn-lookup
+docker build -t msisdn-lookup:latest .
+sudo systemctl restart msisdn-lookup
+
