@@ -298,7 +298,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
                     alert('Please paste at least one MSISDN');
                     return;
                 }
-                const res = await fetch('/batch', {
+                const res = await fetch('batch', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'text/plain'
