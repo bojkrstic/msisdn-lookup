@@ -164,6 +164,15 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
             text-align: left;
         }
         .result-grid th { background: #f8fafc; }
+        .mcc-mnc {
+            display: flex;
+            gap: 16px;
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-weight: 600;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
         .copy-btn {
             background: transparent;
             color: var(--accent);
@@ -461,6 +470,15 @@ func LookupViewHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	numberTypeBadge := template.HTML(fmt.Sprintf(`<span class="%s">%s</span>`, numberTypeClass, template.HTMLEscapeString(resp.NumberType)))
 
+	mcc := resp.MCC
+	if mcc == "" {
+		mcc = "N/A"
+	}
+	mnc := resp.MNC
+	if mnc == "" {
+		mnc = "N/A"
+	}
+
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	fmt.Fprintf(w, `
 <div class="card result-card" data-json='%s'>
@@ -472,7 +490,7 @@ func LookupViewHandler(w http.ResponseWriter, r *http.Request) {
         <li><strong>E.164 canonical:</strong> %s <button type="button" class="copy-btn" data-copy="%s" data-default-label="Copy">Copy</button></li>
         <li><strong>Country:</strong> %s</li>
         <li><strong>Number type:</strong> %s</li>
-        <li><strong>Operator guess:</strong> %s</li>
+        <li><strong>Operator guess:</strong> %s<div class="mcc-mnc"><span>MCC: %s</span><span>MNC: %s</span></div></li>
     </ul>
     <ul class="checks">
         %s
@@ -508,6 +526,8 @@ func LookupViewHandler(w http.ResponseWriter, r *http.Request) {
 		template.HTMLEscapeString(resp.Country),
 		numberTypeBadge,
 		template.HTMLEscapeString(resp.Operator),
+		template.HTMLEscapeString(mcc),
+		template.HTMLEscapeString(mnc),
 		renderChecks(checks),
 		validAlert,
 		template.HTMLEscapeString(badge(resp.CountryConfidence)),

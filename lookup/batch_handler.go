@@ -86,7 +86,7 @@ func renderBatchTable(results []LookupResponse) string {
 
 	var b strings.Builder
 	b.WriteString(`<table class="result-grid"><thead><tr>`)
-	b.WriteString("<th>#</th><th>Input</th><th>E.164</th><th>Country</th><th>Type</th><th>Operator</th><th>Valid</th>")
+	b.WriteString("<th>#</th><th>Input</th><th>E.164</th><th>Country</th><th>Type</th><th>Operator</th><th>MCC</th><th>MNC</th><th>Valid</th>")
 	b.WriteString("</tr></thead><tbody>")
 
 	for idx, res := range results {
@@ -95,6 +95,14 @@ func renderBatchTable(results []LookupResponse) string {
 		operator := template.HTMLEscapeString(res.Operator)
 		input := template.HTMLEscapeString(res.Input)
 		e164 := template.HTMLEscapeString(res.E164)
+		mcc := res.MCC
+		if mcc == "" {
+			mcc = "N/A"
+		}
+		mnc := res.MNC
+		if mnc == "" {
+			mnc = "N/A"
+		}
 		valid := "No"
 		if res.Valid.DigitsOnly && res.Valid.KnownCountryCode && res.Valid.LengthOk {
 			valid = "Yes"
@@ -106,6 +114,8 @@ func renderBatchTable(results []LookupResponse) string {
 		b.WriteString("<td>" + country + "</td>")
 		b.WriteString("<td>" + numberType + "</td>")
 		b.WriteString("<td>" + operator + "</td>")
+		b.WriteString("<td>" + template.HTMLEscapeString(mcc) + "</td>")
+		b.WriteString("<td>" + template.HTMLEscapeString(mnc) + "</td>")
 		b.WriteString("<td>" + valid + "</td>")
 		b.WriteString("</tr>")
 	}

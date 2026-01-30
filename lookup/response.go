@@ -8,6 +8,8 @@ type LookupResponse struct {
 	Country            string   `json:"country"`
 	NumberType         string   `json:"numberType"`
 	Operator           string   `json:"operator"`
+	MCC                string   `json:"mcc"`
+	MNC                string   `json:"mnc"`
 	Valid              Validity `json:"valid"`
 	CountryConfidence  string   `json:"countryConfidence"`
 	TypeConfidence     string   `json:"typeConfidence"`

@@ -7,8 +7,8 @@ func Operator(msisdn string) string {
 		return "Unknown"
 	}
 
-	if op, _ := resolveOperator(normalized); op != "" {
-		return op
+	if op, _ := resolveOperator(normalized); op != nil {
+		return op.Name
 	}
 
 	return "Unknown"

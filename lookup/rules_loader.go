@@ -32,11 +32,15 @@ type OperatorRule struct {
 	Prefix      string `json:"prefix"`
 	Operator    string `json:"operator"`
 	Explanation string `json:"explanation"`
+	MCC         string `json:"mcc"`
+	MNC         string `json:"mnc"`
 }
 
 type operatorMetadata struct {
 	Name        string
 	Explanation string
+	MCC         string
+	MNC         string
 }
 
 var (
@@ -44,7 +48,7 @@ var (
 	loadErr              error
 	countryByPrefix      map[string]*CountryRule
 	maxCountryPrefixLen  int
-	operatorByPrefix     map[string]operatorMetadata
+	operatorByPrefix     map[string]*operatorMetadata
 	maxOperatorPrefixLen int
 )
 
@@ -69,7 +73,7 @@ func loadRuleData() error {
 	}
 
 	tmpCountryByPrefix := make(map[string]*CountryRule)
-	tmpOperatorByPrefix := make(map[string]operatorMetadata)
+	tmpOperatorByPrefix := make(map[string]*operatorMetadata)
 	tmpMaxCountryPrefixLen := 0
 	tmpMaxOperatorPrefixLen := 0
 
@@ -88,9 +92,11 @@ func loadRuleData() error {
 			if opRule.Prefix == "" {
 				continue
 			}
-			tmpOperatorByPrefix[opRule.Prefix] = operatorMetadata{
+			tmpOperatorByPrefix[opRule.Prefix] = &operatorMetadata{
 				Name:        opRule.Operator,
 				Explanation: opRule.Explanation,
+				MCC:         opRule.MCC,
+				MNC:         opRule.MNC,
 			}
 			if l := len(opRule.Prefix); l > tmpMaxOperatorPrefixLen {
 				tmpMaxOperatorPrefixLen = l

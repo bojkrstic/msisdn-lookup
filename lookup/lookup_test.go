@@ -112,3 +112,27 @@ func TestAnalyzeDetectsInvalidCharacters(t *testing.T) {
 		t.Fatalf("country should be unknown for incomplete prefix, got %s", resp.Country)
 	}
 }
+
+func TestAnalyzeExposesMccAndMnc(t *testing.T) {
+	cases := []struct {
+		msisdn   string
+		mcc      string
+		mnc      string
+		operator string
+	}{
+		{"+306956970400", "202", "05", "Vodafone Greece (695 prefix)"},
+		{"+381631048103", "220", "01", "Yettel Serbia (original range)"},
+		{"+393383260866", "222", "01", "TIM Italy (338 prefix)"},
+		{"+41791234567", "228", "01", "Swisscom Mobile (079 prefix)"},
+	}
+
+	for _, tc := range cases {
+		resp := Analyze(tc.msisdn)
+		if resp.MCC != tc.mcc || resp.MNC != tc.mnc {
+			t.Fatalf("%s -> expected MCC=%s and MNC=%s, got MCC=%s MNC=%s", tc.msisdn, tc.mcc, tc.mnc, resp.MCC, resp.MNC)
+		}
+		if resp.Operator != tc.operator {
+			t.Fatalf("%s -> unexpected operator label %s (want %s)", tc.msisdn, resp.Operator, tc.operator)
+		}
+	}
+}

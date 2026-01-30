@@ -27,6 +27,8 @@ func Analyze(msisdn string) LookupResponse {
 		Country:            "Unknown",
 		NumberType:         "unknown",
 		Operator:           "Unknown",
+		MCC:                "",
+		MNC:                "",
 		Valid:              Validity{DigitsOnly: norm.digitsOnly},
 		CountryConfidence:  confidenceHigh,
 		TypeConfidence:     confidenceMedium,
@@ -53,8 +55,10 @@ func Analyze(msisdn string) LookupResponse {
 		resp.Explain.Type = "Type: country unknown so range can't be interpreted"
 	}
 
-	if op, explanation := resolveOperator(normalized); op != "" {
-		resp.Operator = op
+	if op, explanation := resolveOperator(normalized); op != nil {
+		resp.Operator = op.Name
+		resp.MCC = op.MCC
+		resp.MNC = op.MNC
 		resp.Explain.Operator = explanation
 	} else {
 		resp.Explain.Operator = "Operator guess: no matching prefix rule"
@@ -112,9 +116,9 @@ func resolveType(local string, country *CountryRule) (string, string) {
 	return "unknown", "Type: no matching rules"
 }
 
-func resolveOperator(msisdn string) (string, string) {
+func resolveOperator(msisdn string) (*operatorMetadata, string) {
 	if maxOperatorPrefixLen == 0 {
-		return "", ""
+		return nil, ""
 	}
 	for l := maxOperatorPrefixLen; l >= 1; l-- {
 		if len(msisdn) < l {
@@ -126,8 +130,8 @@ func resolveOperator(msisdn string) (string, string) {
 			if explanation == "" {
 				explanation = fmt.Sprintf("Prefix %s matches %s", prefix, op.Name)
 			}
-			return op.Name, fmt.Sprintf("Operator guess: %s", explanation)
+			return op, fmt.Sprintf("Operator guess: %s", explanation)
 		}
 	}
-	return "", ""
+	return nil, ""
 }
